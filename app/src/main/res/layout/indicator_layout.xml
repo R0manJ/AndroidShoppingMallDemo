@@ -1,0 +1,20 @@
+<LinearLayout
+    style="@style/ParentSetting"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/iv_indicator_icon"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Indicator_Title"
+        android:textColor="@color/selector_indicator"
+        android:id="@+id/tv_indicator_title"/>
+
+
+    </LinearLayout>

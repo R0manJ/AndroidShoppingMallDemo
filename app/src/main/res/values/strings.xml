@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidShoppingMallDemo</string>
+    <string name="home">Home</string>
+    <string name="hot">Hot</string>
+    <string name="category">Category</string>
+    <string name="cart">Cart</string>
+    <string name="me">Me</string>
+    <string name="search">Search</string>
 </resources>
