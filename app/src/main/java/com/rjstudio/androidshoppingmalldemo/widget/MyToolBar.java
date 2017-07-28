@@ -3,6 +3,7 @@ package com.rjstudio.androidshoppingmalldemo.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.annotation.RestrictTo;
 import android.support.annotation.StringRes;
 //import android.support.v7.internal.widget.TintTypedArray;
 import android.support.v7.widget.TintTypedArray;
@@ -41,6 +42,7 @@ public class MyToolBar extends Toolbar {
     public MyToolBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
+
         initView();
         //TODO : 这个方法有什么用?
         setContentInsetsRelative(10,10);
@@ -49,6 +51,7 @@ public class MyToolBar extends Toolbar {
 
         if (attrs != null)
         {
+//            TintTypedArray can only be called from within the same library group
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.MyToolBar, defStyleAttr, 0);
 
@@ -77,7 +80,8 @@ public class MyToolBar extends Toolbar {
 
     private void initView()
     {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.tool_layout,null);
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View view = layoutInflater.inflate(R.layout.tool_layout,null);
         leftButton = (Button) view.findViewById(R.id.bu_left);
         rightButton = (ImageButton) view.findViewById(R.id.bu_right);
         titleTextView = (TextView) view.findViewById(R.id.tv_tv_toolbar_title);

@@ -18,6 +18,7 @@ import com.rjstudio.androidshoppingmalldemo.fragment.CategoryFragment;
 import com.rjstudio.androidshoppingmalldemo.fragment.HomeFragment;
 import com.rjstudio.androidshoppingmalldemo.fragment.HotFragment;
 import com.rjstudio.androidshoppingmalldemo.fragment.MineFragment;
+import com.rjstudio.androidshoppingmalldemo.widget.MyToolBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initView()
     {
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        MyToolBar toolBar = (MyToolBar) this.findViewById(R.id.toolbar);
+//        MyToolBar toolBar = new MyToolBar(getApplicationContext());
+        toolBar.setTitle("Home");
         FragmentTabHost fragmentTabHost = (FragmentTabHost) this.findViewById(android.R.id.tabhost);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTabHost.setup(this,fragmentManager,R.id.fg_content);

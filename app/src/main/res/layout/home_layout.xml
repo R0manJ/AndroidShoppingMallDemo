@@ -2,5 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.daimajia.slider.library.SliderLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:id="@+id/sl_image_advertisement">
 
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.daimajia.slider.library.Indicators.PagerIndicator>
+        </com.daimajia.slider.library.SliderLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:id="@+id/rv_showMainItem"/>
 </LinearLayout>
