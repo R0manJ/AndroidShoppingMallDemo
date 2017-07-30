@@ -28,6 +28,13 @@ import java.util.List;
  * Created by r0man on 2017/7/27.
  */
 
+/*
+* 要实现封装Adapter
+* 1.数据使用泛型
+* 2.数据绑定通过抽象方法实现
+* 3.ViewHolder中的View成员变量转而通过view数组来实现
+* 4.基类里面提供常用的方法
+* */
 public class MyAdapter extends RecyclerView.Adapter {
 
     private int LEFT_VALUE = 1;

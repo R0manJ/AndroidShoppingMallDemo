@@ -9,13 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.R;
 import com.rjstudio.androidshoppingmalldemo.adapter.HotWaresAdapter;
+import com.rjstudio.androidshoppingmalldemo.bean.BaseAdapter;
+import com.rjstudio.androidshoppingmalldemo.bean.BaseViewHolder;
 import com.rjstudio.androidshoppingmalldemo.bean.Page;
 import com.rjstudio.androidshoppingmalldemo.bean.Wares;
 import com.rjstudio.androidshoppingmalldemo.http.OKHttpHelper;
@@ -46,6 +50,7 @@ public class HotFragment extends Fragment {
     private MaterialRefreshLayout mRefreshLayout;
     private HotWaresAdapter hotWaresAdapter;
     private int totalPages;
+    private BaseAdapter baseAdapter;
 
     @Nullable
     @Override
@@ -58,25 +63,40 @@ public class HotFragment extends Fragment {
         return view;
     }
 
-    private void setData(List<Wares> data)
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void setData(final List<Wares> data)
     {
         switch (state)
         {
             case STATE_NORMAL:
-                hotWaresAdapter = new HotWaresAdapter(getContext(),data);
-                recyclerView.setAdapter(hotWaresAdapter);
+                baseAdapter = new BaseAdapter<Wares,BaseViewHolder>(data,getContext(), R.layout.wares_layout) {
+                    @Override
+                    public void bindData(BaseViewHolder holder, Wares wares) {
+                        holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(wares.getImgUrl());
+                        holder.findTextView(R.id.tv_wareTitle).setText(wares.getName());
+                        holder.findTextView(R.id.tv_wareSubtitle).setText(wares.getPrice()+"  $");
+                        holder.findButton(R.id.bu_wareBuy).setText("立即购买");
+                    }
+                };
+                recyclerView.setAdapter(baseAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 break;
             case STATE_REFREN:
-                hotWaresAdapter.clearData();
-                hotWaresAdapter.addData(data);
+                baseAdapter.refreshData(data);
                 recyclerView.scrollToPosition(0);
                 mRefreshLayout.finishRefresh();
                 break;
             case STATE_MORE:
-                int recordPosition = hotWaresAdapter.getLastPosition();
-                hotWaresAdapter.addData(recordPosition,data);
-                recyclerView.scrollToPosition(recordPosition);
+                recyclerView.scrollToPosition(baseAdapter.addData(data));
+//
+//                int recordPosition = hotWaresAdapter.getLastPosition();
+//                hotWaresAdapter.addData(recordPosition,data);
+//                recyclerView.scrollToPosition(recordPosition);
                 mRefreshLayout.finishRefreshLoadMore();
                 Log.d("B", "setData: finished.");
                 break;
