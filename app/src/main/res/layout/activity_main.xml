@@ -1,3 +1,4 @@
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,6 +25,7 @@
     </FrameLayout>
 
     <android.support.v4.app.FragmentTabHost
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

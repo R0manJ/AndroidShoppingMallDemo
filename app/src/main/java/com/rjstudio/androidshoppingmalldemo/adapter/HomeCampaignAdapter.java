@@ -5,18 +5,27 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.rjstudio.androidshoppingmalldemo.R;
 import com.rjstudio.androidshoppingmalldemo.bean.Campaign;
 import com.rjstudio.androidshoppingmalldemo.bean.HomeCampaign;
 import com.squareup.picasso.Picasso;
+
+import org.xutils.view.annotation.ViewInject;
 
 import java.util.List;
 
@@ -57,11 +66,22 @@ public class HomeCampaignAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         myHolder.tv_title.setText(mList.get(position).getTitle());
 
         //设置图片
-        Picasso.with(mContext).load(mList.get(position).getCpOne().getImgUrl()).into(myHolder.iv_product);
+        // Picasso.with(mContext).load(mList.get(position).getCpOne().getImgUrl()).into(myHolder.iv_product);
+        //myHolder.iv_product.setImageURI(mList.get(position).getCpOne().getImgUrl());
+        requestImage(mList.get(position).getCpOne().getImgUrl(),myHolder.iv_product);
         Picasso.with(mContext).load(mList.get(position).getCpTwo().getImgUrl()).into(myHolder.iv_product2);
         Picasso.with(mContext).load(mList.get(position).getCpThree().getImgUrl()).into(myHolder.iv_product3);
     }
 
+    private void requestImage(String img_url,SimpleDraweeView simpleDraweeView)
+    {
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(img_url))
+                .setProgressiveRenderingEnabled(true)
+                .build();
+
+        PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder().setImageRequest(request).build();
+        simpleDraweeView.setController(controller);
+    }
     @Override
     public int getItemCount() {
         return mList.size();
@@ -109,10 +129,13 @@ public class HomeCampaignAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class MyItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
-        private ImageView iv_product;
+        private SimpleDraweeView iv_product;
+        //Xultils是什么意思?
+
         private ImageView iv_product2;
         private ImageView iv_product3;
         private TextView tv_title;
+
 
         private View itemView;
         public MyItemViewHolder(View itemView) {
@@ -120,13 +143,14 @@ public class HomeCampaignAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // Up of itemView
             this.itemView = itemView;
             initView();
+
         }
 
 
 
         private void initView() {
             tv_title = (TextView)itemView.findViewById(R.id.tv_card_title);
-            iv_product = (ImageView) itemView.findViewById(R.id.iv_first_product_image);
+            iv_product = (SimpleDraweeView) itemView.findViewById(R.id.iv_first_product_image);
             iv_product2 = (ImageView) itemView.findViewById(R.id.iv_second_product_image);
             iv_product3 = (ImageView)itemView.findViewById(R.id.iv_third_product_image);
 
