@@ -1,0 +1,44 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/sv_productImage"
+        app:placeholderImage="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_wareTitle"
+        android:textSize="20sp"
+        android:lines="3"
+        android:textColor="@color/red"
+        android:layout_toRightOf="@id/sv_productImage"
+        android:text="@string/app_name"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_wareTitle"
+        android:textColor="@color/orange"
+        android:text="@string/app_name"
+        android:textSize="15sp"
+        android:lines="1"
+        android:id="@+id/tv_wareSubtitle"/>
+    <Button
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bu_wareBuy"
+        android:background="@color/red"
+        android:text="@string/addToCart"
+        android:textSize="10sp"
+        android:layout_below="@id/tv_wareSubtitle"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>
