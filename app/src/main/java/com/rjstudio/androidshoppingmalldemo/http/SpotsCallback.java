@@ -11,7 +11,7 @@ import dmax.dialog.SpotsDialog;
  * Created by r0man on 2017/7/29.
  */
 
-public class SpotsCallback<T> extends BaseCallback<T> {
+public abstract class SpotsCallback<T> extends BaseCallback<T> {
     private Context mContext;
     private SpotsDialog spotsDialog;
 
@@ -20,21 +20,6 @@ public class SpotsCallback<T> extends BaseCallback<T> {
         showDialog();
     }
 
-
-    @Override
-    public void onFailure(Request request, Exception e) {
-        dismissDialog();
-    }
-
-    @Override
-    public void onSuccess(Response response, T t) {
-        dismissDialog();
-    }
-
-    @Override
-    public void onError(Response response, int code, Exception e) {
-        dismissDialog();
-    }
 
     @Override
     public void onResponse(Response response) {
@@ -60,7 +45,7 @@ public class SpotsCallback<T> extends BaseCallback<T> {
     private void dismissDialog()
     {
         spotsDialog.dismiss();
-        spotsDialog.hide();
+//        spotsDialog.hide();
         //TODO: 跟hide()方法有什么区别?
     }
 

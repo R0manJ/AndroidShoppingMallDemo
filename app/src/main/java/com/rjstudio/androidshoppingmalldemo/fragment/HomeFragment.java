@@ -17,9 +17,13 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.R;
+import com.rjstudio.androidshoppingmalldemo.adapter.HomeCampaignAdapter;
 import com.rjstudio.androidshoppingmalldemo.adapter.MyAdapter;
 import com.rjstudio.androidshoppingmalldemo.bean.Banner;
+import com.rjstudio.androidshoppingmalldemo.bean.Campaign;
+import com.rjstudio.androidshoppingmalldemo.bean.HomeCampaign;
 import com.rjstudio.androidshoppingmalldemo.http.BaseCallback;
 import com.rjstudio.androidshoppingmalldemo.http.OKHttpHelper;
 import com.rjstudio.androidshoppingmalldemo.http.SpotsCallback;
@@ -58,6 +62,9 @@ public class HomeFragment extends Fragment {
             }
         }
     };
+    private OKHttpHelper okHttpHelper;
+    private List<HomeCampaign> mComaigns;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -73,19 +80,10 @@ public class HomeFragment extends Fragment {
     {
         if (homeView != null)
         {
-            RecyclerView recyclerView = (RecyclerView) homeView.findViewById(R.id.rv_showMainItem);
-            MyAdapter myAdapter = new MyAdapter(getContext());
-            recyclerView.addItemDecoration(myAdapter.getDividerItemDecoration());
-            recyclerView.setAdapter(myAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position, String value) {
-                    Toast.makeText(getContext(), "Clicking "+value, Toast.LENGTH_SHORT).show();
-                }
-            });
+            recyclerView = (RecyclerView) homeView.findViewById(R.id.rv_showMainItem);
             initImageSlider();
             setSliderLayoutData();
+            requestCompaginData();
         }
 
     }
@@ -107,21 +105,47 @@ public class HomeFragment extends Fragment {
                 textSliderView.description(banner.getName());
                 sliderLayout.addSlider(textSliderView);
             }
-            sliderLayout.setPresetTransformer(SliderLayout.Transformer.FlipPage);
+            sliderLayout.setPresetTransformer(SliderLayout.Transformer.Fade);
+            sliderLayout.setDuration(2000);
         }
+    }
+
+    private void setComaignData(List<HomeCampaign> homeCampaigns)
+    {
+//        MyAdapter myAdapter = new MyAdapter(getContext(),homeCampaigns);
+//        recyclerView.addItemDecoration(myAdapter.getDividerItemDecoration());
+//        recyclerView.setAdapter(myAdapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position, String value) {
+//                Toast.makeText(getContext(), "Clicking "+value, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        HomeCampaignAdapter homeCampaignAdapter = new HomeCampaignAdapter(getContext(),homeCampaigns);
+        recyclerView.addItemDecoration(homeCampaignAdapter.getDividerItemDecoration());
+        recyclerView.setAdapter(homeCampaignAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        homeCampaignAdapter.setOnItemClickListener(new HomeCampaignAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Campaign campaign) {
+                Toast.makeText(getContext(), campaign.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setSliderLayoutData()
     {
         String url = "http://112.124.22.238:8081/course_api/banner/query?type=1";
-        OKHttpHelper okHttpHelper = OKHttpHelper.getInstance();
+        okHttpHelper = OKHttpHelper.getInstance();
 
         okHttpHelper.get(url,new SpotsCallback<List<Banner>>(getContext()){
 
 
             @Override
             public void onFailure(Request request, Exception e) {
-                super.onFailure(request, e);
+                //super.onFailure(request, e);
             }
 
             @Override
@@ -133,12 +157,46 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onError(Response response, int code, Exception e) {
-                super.onError(response, code, e);
+
             }
 
-
         });
+    }
 
+    private void requestCompaginData()
+    {
+        okHttpHelper.get(Contants.API.CAMPAIGN_HOME, new BaseCallback<List<HomeCampaign>>() {
+            @Override
+            public void onRequestBefore(Request request) {
+
+            }
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+                Log.d("Init fail", "onFailure: ");
+            }
+
+            @Override
+            public void onSuccess(Response response, List<HomeCampaign> homeCampaigns) {
+                mComaigns = homeCampaigns;
+                for (HomeCampaign homeCampaign:mComaigns)
+                {
+                    Log.d("HomeCampaign", "onSuccess: "+homeCampaign.getTitle());
+                }
+                setComaignData(mComaigns);
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+                Log.d("Init fail", "onError: ");
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+        });
     }
 
 

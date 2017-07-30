@@ -73,6 +73,7 @@ public class OKHttpHelper {
 //                gson.fromJson(response.body().string(),callback.t);
                 //toString 是把流转成字符串
                 //String是把对象转成字符串
+                callback.onResponse(response);
                 if (response.isSuccessful())
                 {
 //                    callback.onSuccess(response,null);
