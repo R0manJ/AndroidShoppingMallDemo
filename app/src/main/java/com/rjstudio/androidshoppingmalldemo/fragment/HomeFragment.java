@@ -21,7 +21,6 @@ import com.google.gson.reflect.TypeToken;
 import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.R;
 import com.rjstudio.androidshoppingmalldemo.adapter.HomeCampaignAdapter;
-import com.rjstudio.androidshoppingmalldemo.adapter.MyAdapter;
 import com.rjstudio.androidshoppingmalldemo.bean.Banner;
 import com.rjstudio.androidshoppingmalldemo.bean.Campaign;
 import com.rjstudio.androidshoppingmalldemo.bean.HomeCampaign;
@@ -114,16 +113,7 @@ public class HomeFragment extends Fragment {
 
     private void setComaignData(List<HomeCampaign> homeCampaigns)
     {
-//        MyAdapter myAdapter = new MyAdapter(getContext(),homeCampaigns);
-//        recyclerView.addItemDecoration(myAdapter.getDividerItemDecoration());
-//        recyclerView.setAdapter(myAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position, String value) {
-//                Toast.makeText(getContext(), "Clicking "+value, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
 
         HomeCampaignAdapter homeCampaignAdapter = new HomeCampaignAdapter(getContext(),homeCampaigns);
         recyclerView.addItemDecoration(homeCampaignAdapter.getDividerItemDecoration());
@@ -201,75 +191,5 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-    /*
-
-    public void requestImage()
-    {
-//        String url = "http://112.124.22.238:8081/course_api/banner/query?type=1";
-        OkHttpClient client = new OkHttpClient();
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .build();
-//        try {
-//            //Response response = client.newCall(request).execute();
-//            //TODO : 这个方法是同步的方法,不能放在主线程里面
-////            String JSON_DATA = response.body().string();
-////            Log.d("JSON_DATA", "requestImage: "+JSON_DATA);
-//
-//
-//            //enqueue是一个异步的方法
-//            client.newCall(request).enqueue(new Callback() {
-//                @Override
-//                public void onFailure(Request request, IOException e) {
-//
-//                }
-//
-//                @Override
-//                public void onResponse(Response response) throws IOException {
-//                    String JSON_DATA = response.body().string();
-//                    Log.d("JSON_DATA", "requestImage: "+JSON_DATA);
-//
-//                }
-//            });
-//
-//        }
-//        catch (Exception e)
-//        {
-//            String TAG = "Okhttp";
-//            Log.d(TAG, "Response failed...");
-//        }
-        //POST方法比Get方法多一个表单请求
-        String url_post = "http://112.124.22.238:8081/course_api/banner/query";
-        //?表示传递的参数
-        RequestBody body = new FormEncodingBuilder().add("type","1").build();
-        Request request_post = new Request.Builder()
-                .url(url_post)
-                .post(body)
-                .build();
-        client.newCall(request_post).enqueue(new Callback() {
-
-            @Override
-            public void onFailure(Request request, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                String JSON_DATA = response.body().string();
-                Log.d("JSON_DATA", "requestImage: "+JSON_DATA);
-                gson = new Gson();
-                Type type = new TypeToken<List<Banner>>(){}.getType();
-                //TypeToken has protected access in "..."
-                mBanner = gson.fromJson(JSON_DATA,type);
-//                setImageData(mBanner);
-                //Only the original thread that created a view hierarchy can touch its views.
-                handler.sendEmptyMessage(2);
-            }
-        });
-//        setImageData(mBanner);
-    }
-
-     */
 
 }

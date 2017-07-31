@@ -2,7 +2,9 @@ package com.rjstudio.androidshoppingmalldemo.bean;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -44,6 +46,8 @@ public abstract class BaseAdapter<T ,H extends BaseViewHolder > extends Recycler
     }
 
     public abstract void bindData(BaseViewHolder holder,T t);
+
+
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder baseViewHolder = new BaseViewHolder(mLayoutInflater.inflate(mLayoutId,null));
@@ -63,6 +67,8 @@ public abstract class BaseAdapter<T ,H extends BaseViewHolder > extends Recycler
     {
         mList.clear();
         mList.addAll(list);
+        Log.d("On" , "refreshData: "+mList.size());
+        if (mList.size() != 0)
         notifyItemRangeChanged(0,mList.size());
     }
 
@@ -74,5 +80,9 @@ public abstract class BaseAdapter<T ,H extends BaseViewHolder > extends Recycler
         return recordLastPosition;
     }
 
-
+    public void clearAllData()
+    {
+        mList.clear();
+        notifyItemRangeChanged(0,10);
+    }
 }
