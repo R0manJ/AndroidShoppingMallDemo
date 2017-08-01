@@ -45,10 +45,7 @@ public class HomeCampaignAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private HomeCampaignAdapter.MyItemViewHolder myViewHolder;
     private HomeCampaignAdapter.OnItemClickListener mOnItemClickListener;
 
-    public HomeCampaignAdapter(Context context)
-    {
-        this.mContext = context;
-    }
+
     public HomeCampaignAdapter(Context context,List<HomeCampaign> list) {
         this.mContext = context;
         this.mList = list;

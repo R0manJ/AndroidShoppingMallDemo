@@ -1,105 +1,84 @@
 package com.rjstudio.androidshoppingmalldemo.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.rjstudio.androidshoppingmalldemo.R;
-import com.rjstudio.androidshoppingmalldemo.bean.Page;
-import com.rjstudio.androidshoppingmalldemo.bean.Wares;
+import com.rjstudio.androidshoppingmalldemo.bean.CategoryWares;
+import com.rjstudio.androidshoppingmalldemo.bean.ShoppingCart;
+import com.rjstudio.androidshoppingmalldemo.bean.Ware;
+import com.rjstudio.androidshoppingmalldemo.utils.CartProvider;
 
 import java.util.List;
 
 /**
  * Created by r0man on 2017/7/30.
+ * 这个适配器用于第二个界面--热门商品展示
  */
 
-public class HotWaresAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HotWaresAdapter extends SimpleAdatper<Ware>  {
+
     private Context mContext;
-    private List<Wares> waresList;
+    private List<Ware> mList;
+    private CartProvider cartProvider;
 
-
+    private CartProvider mCartProvider;
+    private OnItemClickListener onItemClickListener;
 
 //    public HotWaresAdapter(Context context, List<Page > list) {
 //        this.mContext = context;
 //        this.mList = list;
 //    }
 
-    public HotWaresAdapter(Context mContext,List<Wares> list) {
-        this.mContext = mContext;
-        this.waresList = list;
+
+    public HotWaresAdapter(Context context, List<Ware> datas) {
+        super(context,R.layout.hot_item_layout, null);
+        this.mList = datas;
+        this.cartProvider = new CartProvider(context);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HotWaresViewHolder myHolder = (HotWaresViewHolder)holder;
-        //List<Wares> waresList = mList.get(position).getList();
-
-        String img_url = waresList.get(position).getImgUrl();
-        String ware_name = waresList.get(position).getName();
-        float price = waresList.get(position).getPrice();
-
-        myHolder.sv_productImage.setImageURI(img_url);
-        myHolder.tv_productTitle.setText(ware_name);
-        myHolder.tv_productSubtitle.setText(price+"$");
+    void convert(BaseViewHolder holder, Ware ware) {
+        //null
     }
+
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
+        super.onBindViewHolder(holder, position);
+        holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(mList.get(position).getImgUrl());
+        holder.findTextView(R.id.tv_wareName).setText(mList.get(position).getName());
+        holder.findTextView(R.id.tv_warePrice).setText(mList.get(position).getPrice()+ " $");
+        //TODO : ViewHolder中的点击事件中传递的抽象方法意义在哪里?
+        holder.findButton(R.id.bu_Buy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cartProvider.put(convertData(mList.get(position)));
+                Log.d("Buy","Add success.");
+            }
+        });
+    }
+
+
+
 
     @Override
     public int getItemCount() {
-        return waresList.size();
+        return mList.size();
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.wares_layout,null);
-        HotWaresViewHolder viewHolder = new HotWaresViewHolder(view);
-        return viewHolder;
-    }
 
-    public void addData(List<Wares> datas)
-    {
-        waresList.addAll(datas);
-        notifyItemRangeChanged(0,waresList.size());
-    }
-    public void clearData()
-    {
-        waresList.clear();
-        notifyItemRangeChanged(0,waresList.size());
-    }
 
-    public void addData(int position,List<Wares> datas)
-    {
-        if (datas != null && datas.size() > 0)
-        {
-            waresList.addAll(datas);
-            notifyItemRangeChanged(position,waresList.size());
-        }
-    }
+    public ShoppingCart convertData(Ware item){
 
-    public int getLastPosition()
-    {
-        return waresList.size();
-    }
-    class HotWaresViewHolder extends RecyclerView.ViewHolder{
-        private SimpleDraweeView sv_productImage;
-        private TextView tv_productTitle;
-        private TextView tv_productSubtitle;
-        private Button bu_addToCart;
+        ShoppingCart cart = new ShoppingCart();
 
-        public HotWaresViewHolder(View itemView) {
-            super(itemView);
+        cart.setId(item.getId());
+     //   cart.setDescription(item.getDescription());
+        cart.setImgUrl(item.getImgUrl());
+        cart.setName(item.getName());
+        cart.setPrice(item.getPrice());
 
-            sv_productImage = (SimpleDraweeView) itemView.findViewById(R.id.sv_productImage);
-            tv_productTitle = (TextView) itemView.findViewById(R.id.tv_wareTitle);
-            tv_productSubtitle = (TextView) itemView.findViewById(R.id.tv_wareSubtitle);
-            bu_addToCart = (Button) itemView.findViewById(R.id.bu_wareBuy);
-
-        }
-
+        return cart;
     }
 }

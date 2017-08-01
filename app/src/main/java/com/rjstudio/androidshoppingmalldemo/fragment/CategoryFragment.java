@@ -19,10 +19,11 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.FixedLayoutManager;
 import com.rjstudio.androidshoppingmalldemo.R;
+import com.rjstudio.androidshoppingmalldemo.adapter.BaseAdapter;
+import com.rjstudio.androidshoppingmalldemo.adapter.BaseViewHolder;
 import com.rjstudio.androidshoppingmalldemo.adapter.CategoryAdapter;
+import com.rjstudio.androidshoppingmalldemo.adapter.CategoryWareAdapter;
 import com.rjstudio.androidshoppingmalldemo.bean.Banner;
-import com.rjstudio.androidshoppingmalldemo.bean.BaseAdapter;
-import com.rjstudio.androidshoppingmalldemo.bean.BaseViewHolder;
 import com.rjstudio.androidshoppingmalldemo.bean.CategoryList;
 import com.rjstudio.androidshoppingmalldemo.bean.CategoryWare;
 import com.rjstudio.androidshoppingmalldemo.bean.CategoryWares;
@@ -48,14 +49,13 @@ public class CategoryFragment extends Fragment {
     private int pageSize = 10;
     private int categoryId = 1;
     private RecyclerView rv_categoryWare;
-
+    private BaseAdapter<CategoryWare,BaseViewHolder> baseAdapter;
     private static final int STATE_NORMAL = 0;
     private static final int STATE_LOAD_MORE = 1;
     private static final int STATE_REFRESH = 2;
     private int STATE = STATE_NORMAL;
     private List<CategoryWare> mList;
     private int totalPages;
-    private BaseAdapter baseAdapter;
 
     @Nullable
     @Override
@@ -278,7 +278,7 @@ public class CategoryFragment extends Fragment {
                         holder.findTextView(R.id.tv_warePrice).setText(categoryWare.getPrice()+" $");
                     }
                 };
-
+                //CategoryWareAdapter categoryWareAdapter = new CategoryWareAdapter(getContext(),c)
                 rv_categoryWare.setAdapter(baseAdapter);
                 //设置每行显示两个项目
                 rv_categoryWare.setLayoutManager(new FixedLayoutManager(getContext(),2));

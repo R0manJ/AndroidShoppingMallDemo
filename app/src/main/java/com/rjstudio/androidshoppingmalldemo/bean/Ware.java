@@ -4,7 +4,7 @@ package com.rjstudio.androidshoppingmalldemo.bean;
  * Created by r0man on 2017/7/30.
  */
 
-public class Wares
+public class Ware
 {
     private long id;
     private int categoryId;
@@ -12,15 +12,6 @@ public class Wares
     private String imgUrl;
     private Float price;
     private long sale;
-
-    public Wares(long id, int categoryId, String name, String imgUrl, Float price, long sale) {
-        this.id = id;
-        this.categoryId = categoryId;
-        this.name = name;
-        this.imgUrl = imgUrl;
-        this.price = price;
-        this.sale = sale;
-    }
 
     public long getId() {
         return id;

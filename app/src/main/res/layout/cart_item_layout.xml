@@ -24,14 +24,14 @@
         android:text="@string/app_name"
         android:lines="2"
         android:textSize="20sp"
-        android:id="@+id/tv_wareTitle"/>
+        android:id="@+id/tv_wareName"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:id="@+id/tv_warePrice"
-        android:layout_below="@id/tv_wareTitle"
+        android:layout_below="@id/tv_wareName"
         android:layout_toRightOf="@id/sv_productImage"/>
 
     <com.rjstudio.androidshoppingmalldemo.widget.CnButton
@@ -45,5 +45,5 @@
         android:layout_height="30dp"
         android:id="@+id/bu_button"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/tv_wareTitle"/>
+        android:layout_below="@id/tv_wareName"/>
 </RelativeLayout>

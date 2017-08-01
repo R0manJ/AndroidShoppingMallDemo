@@ -9,19 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.R;
 import com.rjstudio.androidshoppingmalldemo.adapter.HotWaresAdapter;
-import com.rjstudio.androidshoppingmalldemo.bean.BaseAdapter;
-import com.rjstudio.androidshoppingmalldemo.bean.BaseViewHolder;
 import com.rjstudio.androidshoppingmalldemo.bean.Page;
-import com.rjstudio.androidshoppingmalldemo.bean.Wares;
+import com.rjstudio.androidshoppingmalldemo.bean.Ware;
 import com.rjstudio.androidshoppingmalldemo.http.OKHttpHelper;
 import com.rjstudio.androidshoppingmalldemo.http.SpotsCallback;
 import com.squareup.okhttp.Request;
@@ -39,8 +35,8 @@ public class HotFragment extends Fragment {
     private int pageSize = 10;
     private OKHttpHelper httpHelper;
     private RecyclerView recyclerView;
-    private List<Wares> pageDatas;
-    private Page<Wares> curPageData;
+    private List<Ware> pageDatas;
+    private Page<Ware> curPageData;
 
     private static final int STATE_NORMAL = 0;
     private static final int STATE_REFREN = 1;
@@ -50,7 +46,6 @@ public class HotFragment extends Fragment {
     private MaterialRefreshLayout mRefreshLayout;
     private HotWaresAdapter hotWaresAdapter;
     private int totalPages;
-    private BaseAdapter baseAdapter;
 
     @Nullable
     @Override
@@ -69,30 +64,22 @@ public class HotFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void setData(final List<Wares> data)
+    private void setData(final List<Ware> data)
     {
         switch (state)
         {
             case STATE_NORMAL:
-                baseAdapter = new BaseAdapter<Wares,BaseViewHolder>(data,getContext(), R.layout.wares_layout) {
-                    @Override
-                    public void bindData(BaseViewHolder holder, Wares wares) {
-                        holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(wares.getImgUrl());
-                        holder.findTextView(R.id.tv_wareTitle).setText(wares.getName());
-                        holder.findTextView(R.id.tv_wareSubtitle).setText(wares.getPrice()+"  $");
-                        holder.findButton(R.id.bu_wareBuy).setText("立即购买");
-                    }
-                };
-                recyclerView.setAdapter(baseAdapter);
+                hotWaresAdapter = new HotWaresAdapter(getContext(),data);
+                recyclerView.setAdapter(hotWaresAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 break;
             case STATE_REFREN:
-                baseAdapter.refreshData(data);
+                hotWaresAdapter.refreshData(data);
                 recyclerView.scrollToPosition(0);
                 mRefreshLayout.finishRefresh();
                 break;
             case STATE_MORE:
-                recyclerView.scrollToPosition(baseAdapter.addData(data));
+                recyclerView.scrollToPosition(hotWaresAdapter.addData(data));
 //
 //                int recordPosition = hotWaresAdapter.getLastPosition();
 //                hotWaresAdapter.addData(recordPosition,data);
@@ -110,14 +97,14 @@ public class HotFragment extends Fragment {
         String url = Contants.API.WARES_HOT+"?curPage="+ curPage +"&pageSize="+ pageSize;
         Log.d("XXXX", "getData: "+url);
         httpHelper = OKHttpHelper.getInstance();
-        httpHelper.get(url, new SpotsCallback<Page<Wares>>(getContext()) {
+        httpHelper.get(url, new SpotsCallback<Page<Ware>>(getContext()) {
             @Override
             public void onFailure(Request request, Exception e) {
                 Log.d("xxx", "onFailure: ");
             }
 
             @Override
-            public void onSuccess(Response response, Page<Wares> waresPage) {
+            public void onSuccess(Response response, Page<Ware> waresPage) {
                 //curPageData = waresPage;
                 setData(waresPage.getList());
                 totalPages = waresPage.getTotalCount();

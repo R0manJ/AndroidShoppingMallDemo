@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_wareTitle"
+        android:id="@+id/tv_wareName"
         android:textSize="20sp"
         android:lines="3"
         android:textColor="@color/red"
@@ -25,20 +25,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/tv_wareTitle"
+        android:layout_below="@id/tv_wareName"
         android:textColor="@color/orange"
         android:text="@string/app_name"
         android:textSize="15sp"
         android:lines="1"
-        android:id="@+id/tv_wareSubtitle"/>
+        android:id="@+id/tv_warePrice"/>
     <Button
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bu_wareBuy"
+        android:id="@+id/bu_Buy"
         android:background="@color/red"
         android:text="@string/addToCart"
         android:textSize="10sp"
-        android:layout_below="@id/tv_wareSubtitle"
+        android:layout_below="@id/tv_warePrice"
         android:layout_alignParentRight="true"/>
 </RelativeLayout>
