@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by r0man on 2017/7/31.
+ * DATA from : Contants.API.CATEGORY_LIST
+ * JSON_DATA : {"id":1,"name":"热门推荐","sort":1}
  */
 
 public class CategoryList implements Serializable{

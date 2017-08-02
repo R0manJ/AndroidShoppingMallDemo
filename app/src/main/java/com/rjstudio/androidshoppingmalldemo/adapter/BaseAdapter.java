@@ -2,9 +2,12 @@ package com.rjstudio.androidshoppingmalldemo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.rjstudio.androidshoppingmalldemo.R;
 
 import java.util.List;
 
@@ -35,6 +38,7 @@ public abstract class BaseAdapter<T,H extends BaseViewHolder> extends RecyclerVi
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         T itemClass = mList.get(position);
+//        holder.findTextView(R.id.tv_wareName).setText("Test");
         convert(holder , itemClass);
     }
 
@@ -70,21 +74,10 @@ public abstract class BaseAdapter<T,H extends BaseViewHolder> extends RecyclerVi
 
     public void refreshData(List<T> targetDatas)
     {
-        if (targetDatas.size() > 0 && targetDatas.size() > mList.size())
-        {
-            mList.addAll(targetDatas);
-            notifyItemRangeChanged(0,mList.size());
-        }
-        else if (targetDatas.size() > 0 && targetDatas.size() > mList.size())
-        {
-            clearData();
-            mList.addAll(targetDatas);
-            notifyItemRangeChanged(0,mList.size());
-        }
-        else
-        {
-            clearData();
-        }
+        clearData();
+        mList.addAll(targetDatas);
+        //TODO :
+        notifyItemRangeChanged(0,10);
     }
     public void clearData()
     {

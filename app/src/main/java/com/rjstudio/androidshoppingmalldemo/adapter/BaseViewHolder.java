@@ -16,6 +16,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private BaseAdapter.OnItemClickListener onItemClickListener;
     private SparseArray<View> views;
 
+    public BaseViewHolder(View itemView)
+    {
+        super(itemView);
+        this.views = new SparseArray<View>();
+    }
     public BaseViewHolder(View itemView, BaseAdapter.OnItemClickListener onItemClickListener)
     {
         super(itemView);
@@ -28,7 +33,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected <T extends View> T findView(int id)
     {
         View view = views.get(id);
-        if (view != null)
+        if (view == null)
         {
             view = itemView.findViewById(id);
             views.put(id,view);

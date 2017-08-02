@@ -45,7 +45,7 @@ public class CartFragment extends Fragment {
 
         cb_selectAll = (CheckBox)view.findViewById(R.id.cb_all);
         tv_totalPrice = (TextView) view.findViewById(R.id.tv_total_price);
-        Button bu_buy = (Button) view.findViewById(R.id.bu_wareBuy);
+        //Button bu_buy = (Button) view.findViewById(R.id.bu_wareBuy);
 
        // CartAdapter cartAdapter = new CartAdapter()
     }

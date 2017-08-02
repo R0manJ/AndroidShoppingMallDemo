@@ -56,6 +56,7 @@ public class CategoryFragment extends Fragment {
     private int STATE = STATE_NORMAL;
     private List<CategoryWare> mList;
     private int totalPages;
+    private CategoryWareAdapter categoryWareAdapter;
 
     @Nullable
     @Override
@@ -105,8 +106,10 @@ public class CategoryFragment extends Fragment {
 
     private void loadMorePage() {
         curPage ++;
+        STATE = STATE_LOAD_MORE;
         if (curPage <= totalPages)
         {
+
             requestCategoryWares();
         }
         else
@@ -117,6 +120,7 @@ public class CategoryFragment extends Fragment {
 
     private void refreshPageToNextPage() {
         curPage ++;
+        STATE = STATE_REFRESH;
         if (curPage <= totalPages)
         {
             requestCategoryWares();
@@ -167,6 +171,7 @@ public class CategoryFragment extends Fragment {
             public void onClick(View v, int categoryId, CategoryList categoryList) {
                 Log.d("Test",categoryId+"---"+categoryList.getName());
                 setCategoryId(categoryId);
+                STATE = STATE_REFRESH;
                 requestCategoryWares();
                 //setCategoryId(categoryId);
 
@@ -246,10 +251,15 @@ public class CategoryFragment extends Fragment {
                 mList = categoryWareCategoryWares.getList();
                 totalPages = (int) categoryWareCategoryWares.getTotalCount();
                 Log.d("On", "totalPages: "+totalPages+"---"+"curPage"+curPage+"dataList:"+mList.size());
+                Log.d("CategoryFragment","--"+(mList != null && mList.size() > 0));
                 if (mList != null && mList.size() > 0)
                 {
                     showCategoryWare(mList);
 
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "没有商品了", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -269,17 +279,8 @@ public class CategoryFragment extends Fragment {
         switch (STATE)
         {
             case STATE_NORMAL:
-                baseAdapter = new BaseAdapter<CategoryWare,BaseViewHolder>(categoryWares,getContext(), R.layout.category_ware_item_layout) {
-                    @Override
-                    public void bindData(BaseViewHolder holder, CategoryWare categoryWare) {
-
-                        holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(categoryWare.getImgUrl());
-                        holder.findTextView(R.id.tv_wareTitle).setText(categoryWare.getName());
-                        holder.findTextView(R.id.tv_warePrice).setText(categoryWare.getPrice()+" $");
-                    }
-                };
-                //CategoryWareAdapter categoryWareAdapter = new CategoryWareAdapter(getContext(),c)
-                rv_categoryWare.setAdapter(baseAdapter);
+                categoryWareAdapter = new CategoryWareAdapter(getContext(),categoryWares);
+                rv_categoryWare.setAdapter(categoryWareAdapter);
                 //设置每行显示两个项目
                 rv_categoryWare.setLayoutManager(new FixedLayoutManager(getContext(),2));
                 break;
@@ -289,16 +290,14 @@ public class CategoryFragment extends Fragment {
                     // java.lang.IndexOutOfBoundsException: Inconsistency detected.
                     // Invalid view holder adapter positionViewHolder{8d2c306 position=3 id=-1, oldPos=-1, pLpos:-1 no parent}
                     //解决方案 是重写一个LayoutManager
-                    baseAdapter.addData(categoryWares);
+                categoryWareAdapter.addData(categoryWares);
 
-                    Toast.makeText(getContext(), "已经没有了哦 >,<", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "已经没有了哦 >,<", Toast.LENGTH_SHORT).show();
 
 
                 break;
             case STATE_REFRESH:
-
-                    baseAdapter.refreshData(categoryWares);
-
+                categoryWareAdapter.refreshData(categoryWares);
                 break;
         }
 
@@ -309,6 +308,6 @@ public class CategoryFragment extends Fragment {
     {
         this.categoryId = id;
         this.curPage = 1;
-        baseAdapter.clearAllData();
+        //baseAdapter.clearAllData();
     }
 }

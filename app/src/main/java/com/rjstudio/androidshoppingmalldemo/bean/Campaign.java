@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 /**
  * Created by r0man on 2017/7/30.
+ * DATA from Contants.API.COMPAIGN_HOME
+ * JSON_DATA : {"cpOne":
+ *                 {"id":17,"title":"手机专享","imgUrl":"http://7mno4h.com2.z0.glb.qiniucdn.com/555c6c90Ncb4fe515.jpg"}
  */
 
 public class Campaign implements Serializable{

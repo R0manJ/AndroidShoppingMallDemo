@@ -64,8 +64,9 @@ public class HotFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void setData(final List<Ware> data)
+    private void setData(List<Ware> data)
     {
+
         switch (state)
         {
             case STATE_NORMAL:
@@ -107,6 +108,10 @@ public class HotFragment extends Fragment {
             public void onSuccess(Response response, Page<Ware> waresPage) {
                 //curPageData = waresPage;
                 setData(waresPage.getList());
+                for (Ware w : waresPage.getList())
+                {
+                    Log.d("Name",w.getName());
+                }
                 totalPages = waresPage.getTotalCount();
 
             }

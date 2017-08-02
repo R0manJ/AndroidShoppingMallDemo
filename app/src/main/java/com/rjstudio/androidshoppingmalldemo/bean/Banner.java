@@ -1,10 +1,15 @@
 package com.rjstudio.androidshoppingmalldemo.bean;
 
+import com.rjstudio.androidshoppingmalldemo.Contants;
+
 /**
  * Created by r0man on 2017/7/29.
+ * Data from Contants.API.Banner
+ * JSON_DATA: {"id":1,"name":"音箱狂欢","imgUrl":"http://7mno4h.com2.z0.glb.qiniucdn.com/5608f3b5Nc8d90151.jpg","type":1}
  */
 
 public class Banner {
+
     private int id;
     private String name;
     private String imgUrl;

@@ -33,28 +33,22 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
 
 
     public HotWaresAdapter(Context context, List<Ware> datas) {
-        super(context,R.layout.hot_item_layout, null);
+        //List<Ware>
+        super(context,R.layout.hot_item_layout, datas);
         this.mList = datas;
         this.cartProvider = new CartProvider(context);
     }
 
     @Override
-    void convert(BaseViewHolder holder, Ware ware) {
-        //null
-    }
+    void convert(BaseViewHolder holder, final Ware ware) {
 
-    @Override
-    public void onBindViewHolder(BaseViewHolder holder, final int position) {
-        super.onBindViewHolder(holder, position);
-        holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(mList.get(position).getImgUrl());
-        holder.findTextView(R.id.tv_wareName).setText(mList.get(position).getName());
-        holder.findTextView(R.id.tv_warePrice).setText(mList.get(position).getPrice()+ " $");
-        //TODO : ViewHolder中的点击事件中传递的抽象方法意义在哪里?
+        holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(ware.getImgUrl());
+        holder.findTextView(R.id.tv_wareName).setText(ware.getName());
+        holder.findTextView(R.id.tv_warePrice).setText(ware.getPrice() + " $ ");
         holder.findButton(R.id.bu_Buy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cartProvider.put(convertData(mList.get(position)));
-                Log.d("Buy","Add success.");
+                Log.d("Button",ware.getName());
             }
         });
     }

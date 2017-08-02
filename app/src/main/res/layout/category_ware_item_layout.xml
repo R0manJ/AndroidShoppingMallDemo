@@ -18,7 +18,7 @@
 
     <TextView
         android:gravity="center"
-        android:id="@+id/tv_wareTitle"
+        android:id="@+id/tv_wareName"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginLeft="8dp"

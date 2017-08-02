@@ -25,11 +25,6 @@ public abstract class SimpleAdatper<T> extends BaseAdapter<T, BaseViewHolder> {
 
 
 
-    //如果上一个对象有List集合
-    protected void convertListData()
-    {
-
-    }
 
 
 }

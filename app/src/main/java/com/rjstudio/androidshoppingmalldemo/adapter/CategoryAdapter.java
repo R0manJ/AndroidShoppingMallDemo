@@ -10,9 +10,10 @@ import java.util.List;
 
 /**
  * Created by r0man on 2017/7/31.
+ * 这个适配器用于显示商品页面的菜单列表
  */
 
-public class CategoryAdapter extends BaseAdapter<CategoryList,BaseViewHolder>  {
+public class CategoryAdapter extends SimpleAdatper<CategoryList> {
     private List<CategoryList> mList;
     private OnItemClickListener mListener;
 

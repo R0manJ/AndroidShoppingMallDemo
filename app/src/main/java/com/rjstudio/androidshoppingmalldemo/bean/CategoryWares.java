@@ -4,11 +4,13 @@ import java.util.List;
 
 /**
  * Created by r0man on 2017/7/31.
+ * DATA from : Contants.API.CATEGORY_WARE
+ * JSON DATA : copyright":"本API接口只允许菜鸟窝(http://www.cniao5.com)用户使用,其他机构或者个人使用均为侵权行为",
+                "totalCount":23,"currentPage":1,"totalPage":0,"pageSize":10,"orders":[],"list":
  */
 
 public class CategoryWares<T> {
-    //copyright":"本API接口只允许菜鸟窝(http://www.cniao5.com)用户使用,其他机构或者个人使用均为侵权行为",
-    // "totalCount":23,"currentPage":1,"totalPage":0,"pageSize":10,"orders":[],"list":
+
     private String copytright;
     private long totalCount;
     private int currentPage;
