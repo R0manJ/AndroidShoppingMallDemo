@@ -22,7 +22,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> {
 
     public CartAdapter( Context context,List<ShoppingCart> datas)
     {
-        super(context,R.layout.cart_layout,datas);
+        super(context,R.layout.cart_item_layout,datas);
         this.mList = datas;
         this.mContext = context;
     }
@@ -33,22 +33,18 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> {
         this.mContext = context;
     }
 
-    @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-
-        //ShoppingCart extends wares
-
-
-    }
-
 
     @Override
     void convert(BaseViewHolder holder, ShoppingCart cart) {
-        holder.findView(R.id.cb_select);
         holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(cart.getImgUrl());
-        holder.findTextView(R.id.tv_card_title).setText(cart.getName());
-        holder.findTextView(R.id.tv_warePrice).setText(cart.getPrice()+ " $");
+        holder.findTextView(R.id.tv_wareName).setText(cart.getName());
+        holder.findTextView(R.id.tv_warePrice).setText(cart.getPrice() + " $ ");
+
+
+        CheckBox checkBox = holder.findCheckBox(R.id.cb_select);
+        checkBox.setChecked(cart.isChecked());
+
+
     }
 
     @Override

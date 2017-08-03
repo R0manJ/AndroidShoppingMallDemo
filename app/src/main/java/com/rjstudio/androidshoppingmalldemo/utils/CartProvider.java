@@ -12,6 +12,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by r0man on 2017/7/31.
  */
@@ -22,15 +24,14 @@ public class CartProvider {
     private final Context mContext;
 
     private static final String CART_JSON = "cart_json";
-    private List<ShoppingCart> carts;
     //Hash Map
 
 
     public CartProvider(Context context) {
-        this.datas = new SparseArray<ShoppingCart>();
 
         this.mContext = context;
         //从本地内容加载到内存中
+        this.datas = new SparseArray<>(10);
         listToSpares();
     }
 
@@ -44,8 +45,12 @@ public class CartProvider {
         else
         {
             temp = cart;
+            //设置购买的数量
+            temp.setCount(1);
         }
+
         datas.put((int) cart.getId(),temp);
+
         commit();
     }
 
@@ -68,8 +73,14 @@ public class CartProvider {
         return  getDataFromLocal();
     }
 
+    public int readDataSize()
+    {
+        return 0;
+    }
+
     public void listToSpares()
     {
+
         List<ShoppingCart> carts = getDataFromLocal();
         if (carts != null && carts.size() > 0)
         {
@@ -79,45 +90,49 @@ public class CartProvider {
             }
         }
     }
-    public void commit()
-    {
-        //用于保存数据到本地
-        List<ShoppingCart> carts = sparesToList();
-        //TODO : 这里不懂...
-        //获取数据 -> list -> JSON ->保存到本地
-        Gson gson = new Gson();
-        String toJsonContent = null;
-        for (ShoppingCart shoppingcart : carts)
-        {
-            toJsonContent += gson.toJson(shoppingcart);
-        }
-        Log.d("COMMIT", "JSON: "+toJsonContent);
-        PreferencesUtils.putString(mContext,CART_JSON,toJsonContent);
 
-    }
-
-    private List<ShoppingCart> sparesToList()
+    public List<ShoppingCart> sparseToList()
     {
         int size = datas.size();
         List<ShoppingCart> list = new ArrayList<>(size);
-        for (int i = 0 ; i < size ; i ++)
+        for (int i = 0 ; i < size ; i ++ )
         {
             list.add(datas.valueAt(i));
         }
         return list;
     }
+    public void commit()
+    {
+
+        List<ShoppingCart> carts = sparseToList();
+//        Gson gson = new Gson();
+//        String toJsonContent = "";
+//        for (ShoppingCart shoppingcart : carts)
+//        {
+//            toJsonContent += gson.toJson(shoppingcart);
+//        }
+////        Log.d("COMMIT", "JSON: "+toJsonContent);
+//        PreferencesUtils.putString(mContext,CART_JSON,toJsonContent);
+        PreferencesUtils.putString(mContext,CART_JSON,JSONUtil.toJSON(carts));
+
+
+
+    }
+
 
     public List<ShoppingCart> getDataFromLocal()
     {
         String json = PreferencesUtils.getString(mContext,CART_JSON);
+        Log.d(TAG, "getDataFromLocal: "+ json);
+
+
+
         List<ShoppingCart> carts = null;
         if (json != null)
         {
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<ShoppingCart>>(){}.getType();
-            carts = gson.fromJson(json,type);
-            return carts;
+            carts = JSONUtil.fromJson(json,new TypeToken<List<ShoppingCart>>(){}.getType());
         }
+//        Log.d("List",carts.size() + "");
         return carts;
     }
 }

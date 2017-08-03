@@ -34,12 +34,14 @@
             android:layout_centerVertical="true"
             />
         <Button
+            android:id="@+id/bu_Buy"
            android:layout_alignParentRight="true"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="BUY"/>
 
         <Button
+            android:id="@+id/bu_Delect"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
             android:layout_alignParentRight="true"

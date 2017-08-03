@@ -23,7 +23,6 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
     private List<Ware> mList;
     private CartProvider cartProvider;
 
-    private CartProvider mCartProvider;
     private OnItemClickListener onItemClickListener;
 
 //    public HotWaresAdapter(Context context, List<Page > list) {
@@ -48,7 +47,8 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
         holder.findButton(R.id.bu_Buy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Button",ware.getName());
+                cartProvider.put(convertData(ware));
+//                Log.d("Button",ware.getName());
             }
         });
     }

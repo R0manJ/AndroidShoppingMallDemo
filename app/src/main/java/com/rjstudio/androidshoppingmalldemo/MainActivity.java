@@ -1,5 +1,6 @@
 package com.rjstudio.androidshoppingmalldemo;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<TabHost> mTabHosts;
     private String TAG;
+    private CartFragment cartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
         mTabHosts.add(tabHost_Cart);
         mTabHosts.add(tabHost_Mine);
 
+        fragmentTabHost.setOnTabChangedListener(new android.widget.TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                Log.d("MainActivity",tabId);
+                //当切换到Cart界面的时候刷新数据
+                if (tabId == getString(R.string.cart))
+                {
+
+                    refreshCartFragmentData();
+                }
+            }
+        });
+
         for (TabHost tabHost : mTabHosts)
         {
             TAG = "MainActivity";
@@ -79,4 +94,28 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(getString(tabHost.getmTitleTextId()));
         return view;
     }
+
+    public void refreshCartFragmentData()
+    {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
+
+        if (fragment != null)
+        {
+            if (cartFragment == null)
+            {
+
+                cartFragment = (CartFragment) fragment;
+                cartFragment.refreshData();
+            }
+            else
+            {
+                cartFragment.refreshData();
+            }
+        }
+
+
+    }
+
+
 }
