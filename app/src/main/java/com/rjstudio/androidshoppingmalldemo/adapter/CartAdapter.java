@@ -1,6 +1,7 @@
 package com.rjstudio.androidshoppingmalldemo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -155,6 +156,34 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> {
 
     }
 
+    //编辑按钮 -> 把所有的条目的checkbox都设置为空 -> 选中 -> 删除List -> 删除cartProvider
+    public void editStatus()
+    {
+        for (ShoppingCart cart : mList)
+        {
+            cart.setChecked(false);
+        }
+        cb_all.setChecked(false);
+        notifyItemRangeChanged(0, mList.size());
+    }
+
+    public void delect()
+    {
+        int i = 0;
+        Log.d("Delect",mList.size()+"");
+        for (ShoppingCart cart : mList)
+        {
+            if (cart.isChecked())
+            {
+                mList.remove(i);
+                cartProvider.delete(cart);
+                notifyItemRemoved(i);
+                //TODO : ConcurrentModificationException
+            }
+            i ++;
+        }
+        Log.d("Delect",mList.size()+"");
+    }
 
 
 

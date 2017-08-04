@@ -140,12 +140,7 @@ public class MainActivity extends AppCompatActivity {
         myToolBar.showRightButton();
         //隐藏搜索栏
         myToolBar.hideSearchBar();
-        myToolBar.setRightButtonOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 
     //跳转到其他页面
@@ -154,12 +149,16 @@ public class MainActivity extends AppCompatActivity {
 
         myToolBar.setTitle(tabId);
       //  myToolBar.hideTitle();
-        if (!tabId.equals("Home"))
+        if (tabId.equals("Home"))
         {
-            myToolBar.showSearchBar();
-            myToolBar.hideTitle();
+            myToolBar.hideSearchBar();
+            myToolBar.showTitle();
+            myToolBar.hideRightButton();
         }
-        myToolBar.showRightButton();
+        else
+        {
+            myToolBar.showRightButton();
+        }
        // toolBar.showLeftButton();
     }
 

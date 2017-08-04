@@ -27,8 +27,8 @@
         android:id="@+id/et_search"
         />
     <ImageButton
+        android:background="@color/material_blue"
         android:visibility="invisible"
-        android:background="@mipmap/ic_launcher"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/bu_right"

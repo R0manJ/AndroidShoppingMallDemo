@@ -2,6 +2,7 @@ package com.rjstudio.androidshoppingmalldemo.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,6 @@ import com.rjstudio.androidshoppingmalldemo.widget.MyToolBar;
 
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by r0man on 2017/7/26.
@@ -37,7 +37,7 @@ import static android.content.ContentValues.TAG;
  * 3.put数据时,如购物车存在相同产品,则需要将数量加1即可
  */
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements View.OnClickListener {
 
     private CheckBox cb_selectAll;
     private RecyclerView rv_showCartWare;
@@ -45,6 +45,11 @@ public class CartFragment extends Fragment {
     private CartProvider cartProvider;
     private Button bu_buy;
     private CartAdapter cartAdapter;
+    private int STATUS_EDIT = 1;
+    private int STATUS_NORMAL = 2;
+    private int STATUS = STATUS_NORMAL;
+    private MyToolBar cartToolBar;
+
 
     @Nullable
     @Override
@@ -63,6 +68,7 @@ public class CartFragment extends Fragment {
         cb_selectAll = (CheckBox)view.findViewById(R.id.cb_all);
         tv_totalPrice = (TextView) view.findViewById(R.id.tv_total_price);
         bu_buy = (Button) view.findViewById(R.id.bu_Buy);
+        bu_buy.setOnClickListener(this);
         showData();
 
     }
@@ -103,17 +109,58 @@ public class CartFragment extends Fragment {
         if (context instanceof MainActivity)
         {
             MainActivity activity = (MainActivity) context;
-            final MyToolBar cartToolBar = (MyToolBar) activity.findViewById(R.id.toolbar);
+            cartToolBar = (MyToolBar) activity.findViewById(R.id.toolbar);
             cartToolBar.setRightButtonOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    listenerEditButton();
                     Toast.makeText(getContext(), "XxX", Toast.LENGTH_SHORT).show();
                 }
             });
+
             //TODO : 工具栏的修改
            // mToolbar.hidewSearchView();
             //mToolbar.setTitle();
             //mToolbar.getRightButton().setText();
+        }
+    }
+
+    //编辑购物车功能
+    //点击编辑按钮 -> 按钮显示为"完成" -> 设置界面界面状态值 -> 购买按钮变为删除
+    private void listenerEditButton()
+    {
+        if (STATUS == STATUS_NORMAL)
+        {
+            STATUS = STATUS_EDIT;
+            bu_buy.setText(getString(R.string.delect));
+            cartToolBar.setRightButtonIcon(getResources().getDrawable(R.mipmap.ic_launcher));
+            cartAdapter.editStatus();
+
+        }
+        else
+        {
+            STATUS = STATUS_NORMAL;
+            bu_buy.setText(getString(R.string.buy));
+            cartToolBar.setRightButtonIcon(getResources().getDrawable(R.mipmap.ic_launcher_round));
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId())
+        {
+            case R.id.bu_Buy:
+                if (STATUS == STATUS_EDIT)
+                {
+                    cartAdapter.delect();
+//                    cartAdapter.delect();
+                }
+                else
+                {
+                    //TODO : 购买的逻辑
+                }
+                break;
         }
     }
 }

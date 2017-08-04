@@ -8,4 +8,6 @@
     <string name="test">Test</string>
     <string name="search">Search</string>
     <string name="addToCart">Add to cart</string>
+    <string name="delect">Delect</string>
+    <string name="buy">Buy</string>
 </resources>
