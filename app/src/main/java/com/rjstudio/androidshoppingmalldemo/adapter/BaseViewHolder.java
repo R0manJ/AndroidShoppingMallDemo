@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.rjstudio.androidshoppingmalldemo.widget.CnButton;
 
 /**
  * Created by r0man on 2017/8/1.
@@ -60,6 +61,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public CheckBox findCheckBox (int id)
     {
         return (CheckBox) findView(id);
+    }
+
+    public CnButton findCnButton(int id)
+    {
+        return findView(id);
     }
 
     @Override

@@ -73,6 +73,7 @@ public class CnButton extends LinearLayout implements View.OnClickListener
             setTvBackground(drawableTv );
             a.recycle();
         }
+
     }
 
     private void initView()

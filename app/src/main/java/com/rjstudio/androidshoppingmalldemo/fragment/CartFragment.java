@@ -73,7 +73,7 @@ public class CartFragment extends Fragment {
         //getAll() === null;
 
 //        Log.d(TAG, "showData: "+ cartProvider.getAll().size());
-        cartAdapter = new CartAdapter(getContext(),carts);
+        cartAdapter = new CartAdapter(getContext(),carts,cb_selectAll,tv_totalPrice);
 
 
 
