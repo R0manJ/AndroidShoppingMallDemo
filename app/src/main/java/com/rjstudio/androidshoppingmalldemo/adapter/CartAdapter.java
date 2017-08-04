@@ -39,7 +39,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> {
         holder.findSimpleDraweeView(R.id.sv_productImage).setImageURI(cart.getImgUrl());
         holder.findTextView(R.id.tv_wareName).setText(cart.getName());
         holder.findTextView(R.id.tv_warePrice).setText(cart.getPrice() + " $ ");
-
+        //holder.findCnButton(R.id.cnb_button).setValue(2);
 
         CheckBox checkBox = holder.findCheckBox(R.id.cb_select);
         checkBox.setChecked(cart.isChecked());

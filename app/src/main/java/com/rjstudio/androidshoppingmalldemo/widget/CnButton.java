@@ -26,30 +26,29 @@ public class CnButton extends LinearLayout implements View.OnClickListener
     private Button bu_add;
     private TextView tv_content;
 
-    private int value;
+    private int value = 1;
     private int minValue;
     private int maxValue;
 
     private OnButtonClickListener onButtonClickListener;
 
     String TAG = "CnButton";
+    private View view;
 
     public CnButton(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public CnButton(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+//       super(context,attrs);
+         this(context, attrs,0);
     }
 
     public CnButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
 
-    public CnButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        mInflater = LayoutInflater.from(context);
         initView();
-
         if (attrs != null)
         {
             Log.d(TAG,"Load attrs");
@@ -59,11 +58,12 @@ public class CnButton extends LinearLayout implements View.OnClickListener
             setValue(val);
 
             int minVal = a.getInt(R.styleable.CnButton_minValue,0);
-            setValue(minVal);
+            setMinValue(minVal);
 
             int maxVal = a.getInt(R.styleable.CnButton_maxValue,0);
-            setValue(maxVal);
+            setMaxValue(maxVal);
 
+            Log.d("Val","VAL"+val+"-minVal"+minVal+"-maxVal"+maxVal);
             Drawable drawableBtnAdd = a.getDrawable(R.styleable.CnButton_btnAddBackground);
             Drawable drawableBtnSub = a.getDrawable(R.styleable.CnButton_btnSubBackground);
             Drawable drawableTv = a.getDrawable(R.styleable.CnButton_tvBackground);
@@ -78,13 +78,17 @@ public class CnButton extends LinearLayout implements View.OnClickListener
     private void initView()
     {
         //TODO : 不懂
-        View view = mInflater.inflate(R.layout.custom_button,this,true);
-        bu_add = (Button) view.findViewById(R.id.bu_add);
-        bu_sub = (Button) view.findViewById(R.id.bu_sub);
-        tv_content = (TextView) view.findViewById(R.id.tv_content);
+        if (view == null)
+        {
+            view = mInflater.inflate(R.layout.custom_button,this,true);
+            bu_add = (Button) view.findViewById(R.id.bu_add);
+            bu_sub = (Button) view.findViewById(R.id.bu_sub);
+            tv_content = (TextView) view.findViewById(R.id.tv_content);
 
-        bu_add.setOnClickListener(this);
-        bu_sub.setOnClickListener(this);
+            bu_add.setOnClickListener(this);
+            bu_sub.setOnClickListener(this);
+        }
+
 
 
     }
@@ -168,8 +172,10 @@ public class CnButton extends LinearLayout implements View.OnClickListener
 
 
     public void setValue(int value) {
-        tv_content.setText(value);
+        Log.d("Show value",value+"");
         this.value = value;
+        tv_content.setText(value+"");
+
     }
 
     public int getMinValue() {

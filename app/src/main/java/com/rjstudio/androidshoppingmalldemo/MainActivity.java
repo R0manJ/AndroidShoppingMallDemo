@@ -5,13 +5,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rjstudio.androidshoppingmalldemo.bean.TabHost;
 import com.rjstudio.androidshoppingmalldemo.fragment.CartFragment;
@@ -29,20 +28,21 @@ public class MainActivity extends AppCompatActivity {
     private List<TabHost> mTabHosts;
     private String TAG;
     private CartFragment cartFragment;
+    private MyToolBar myToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolbar();
+
         initView();
 
     }
     private void initView()
     {
-//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        MyToolBar toolBar = (MyToolBar) this.findViewById(R.id.toolbar);
-//        MyToolBar toolBar = new MyToolBar(getApplicationContext());
-        toolBar.setTitle("Home");
+
+
         FragmentTabHost fragmentTabHost = (FragmentTabHost) this.findViewById(android.R.id.tabhost);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTabHost.setup(this,fragmentManager,R.id.fg_content);
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mTabHosts.add(tabHost_Cart);
         mTabHosts.add(tabHost_Mine);
 
+
         fragmentTabHost.setOnTabChangedListener(new android.widget.TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
@@ -68,7 +69,14 @@ public class MainActivity extends AppCompatActivity {
                 if (tabId == getString(R.string.cart))
                 {
 
+                    Log.d("MainActivity-",tabId);
+
                     refreshCartFragmentData();
+                    changeToolbarInCartPage();
+                }
+                else
+                {
+                    changeToOtherPage(tabId);
                 }
             }
         });
@@ -95,11 +103,13 @@ public class MainActivity extends AppCompatActivity {
         return view;
     }
 
+    //当界面跳到购物车界面时,操作一下函数
     public void refreshCartFragmentData()
     {
 
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
 
+        //changeToolbar();
         if (fragment != null)
         {
             if (cartFragment == null)
@@ -118,4 +128,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //当页面切换到购物车界面,工具栏的变化
+    public void changeToolbarInCartPage()
+    {
+        //标题
+        myToolBar.setTitle(getText(R.string.cart));
+        //隐藏左按钮
+        myToolBar.hideLeftButton();
+        //显示右边按钮 -- 编辑按钮
+//        myToolBar.hideRightButton();
+        myToolBar.showRightButton();
+        //隐藏搜索栏
+        myToolBar.hideSearchBar();
+        myToolBar.setRightButtonOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //跳转到其他页面
+    public void changeToOtherPage(final String tabId)
+    {
+
+        myToolBar.setTitle(tabId);
+      //  myToolBar.hideTitle();
+        if (!tabId.equals("Home"))
+        {
+            myToolBar.showSearchBar();
+            myToolBar.hideTitle();
+        }
+        myToolBar.showRightButton();
+       // toolBar.showLeftButton();
+    }
+
+    //初始化工具栏
+    public void initToolbar()
+    {
+        myToolBar = (MyToolBar) findViewById(R.id.toolbar);
+        myToolBar.setTitle(getText(R.string.home));
+        myToolBar.hideSearchBar();
+
+    }
 }

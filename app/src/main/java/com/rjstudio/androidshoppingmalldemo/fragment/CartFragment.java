@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rjstudio.androidshoppingmalldemo.MainActivity;
 import com.rjstudio.androidshoppingmalldemo.R;
 import com.rjstudio.androidshoppingmalldemo.adapter.CartAdapter;
 import com.rjstudio.androidshoppingmalldemo.bean.ShoppingCart;
 import com.rjstudio.androidshoppingmalldemo.utils.CartProvider;
+import com.rjstudio.androidshoppingmalldemo.widget.MyToolBar;
 
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class CartFragment extends Fragment {
         List<ShoppingCart> carts = cartProvider.getAll();
         //getAll() === null;
 
-        Log.d(TAG, "showData: "+ cartProvider.getAll().size());
+//        Log.d(TAG, "showData: "+ cartProvider.getAll().size());
         cartAdapter = new CartAdapter(getContext(),carts);
 
 
@@ -101,10 +103,17 @@ public class CartFragment extends Fragment {
         if (context instanceof MainActivity)
         {
             MainActivity activity = (MainActivity) context;
+            final MyToolBar cartToolBar = (MyToolBar) activity.findViewById(R.id.toolbar);
+            cartToolBar.setRightButtonOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "XxX", Toast.LENGTH_SHORT).show();
+                }
+            });
             //TODO : 工具栏的修改
-            mToolbar.hidewSearchView();
-            mToolbar.setTitle();
-            mToolbar.getRightButton().setText();
-        }`
+           // mToolbar.hidewSearchView();
+            //mToolbar.setTitle();
+            //mToolbar.getRightButton().setText();
+        }
     }
 }

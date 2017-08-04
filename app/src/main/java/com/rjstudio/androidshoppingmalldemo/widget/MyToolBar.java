@@ -9,6 +9,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,18 +31,19 @@ public class MyToolBar extends Toolbar {
     private TextView titleTextView;
     private EditText editText;
     private Context mContext;
+    private View mView;
 
     public MyToolBar(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public MyToolBar(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public MyToolBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mContext = context;
+
 
         initView();
         //TODO : 这个方法有什么用?
@@ -52,10 +54,12 @@ public class MyToolBar extends Toolbar {
         if (attrs != null)
         {
 //            TintTypedArray can only be called from within the same library group
+
+
+
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.MyToolBar, defStyleAttr, 0);
 
-//            final TintTypedArray a = context.obtainStyledAttributes(attrs,R.styleable.MyToolBar,defStyleAttr,0);
 
             final Drawable rightIcon = a.getDrawable(R.styleable.MyToolBar_rightButtonIcon);
             if (rightIcon != null) {
@@ -70,7 +74,7 @@ public class MyToolBar extends Toolbar {
 
                 showSearchBar();
 
-                hideTitleTextView();
+                hideTitle();
             }
 
 
@@ -80,15 +84,20 @@ public class MyToolBar extends Toolbar {
 
     private void initView()
     {
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View view = layoutInflater.inflate(R.layout.tool_layout,null);
-        leftButton = (Button) view.findViewById(R.id.bu_left);
-        rightButton = (ImageButton) view.findViewById(R.id.bu_right);
-        titleTextView = (TextView) view.findViewById(R.id.tv_tv_toolbar_title);
-        editText = (EditText) view.findViewById(R.id.et_search);
+        if (mView == null)
+        {
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            mView = layoutInflater.inflate(R.layout.tool_layout,null);
+            leftButton = (Button) mView.findViewById(R.id.bu_left);
+            rightButton = (ImageButton) mView.findViewById(R.id.bu_right);
+            titleTextView = (TextView) mView.findViewById(R.id.tv_tv_toolbar_title);
+            Log.d("InitView",""+titleTextView.getText());
+            editText = (EditText) mView.findViewById(R.id.et_search);
 
-        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
-        addView(view,lp);
+            LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+            addView(mView,lp);
+        }
+
     }
 
 //    About "Toolbar" -  title
@@ -96,6 +105,7 @@ public class MyToolBar extends Toolbar {
     @Override
     public void setTitle(@StringRes int resId) {
         setTitle(getContext().getText(resId));
+//        Log.d("Change",getContext().getText(resId)+"");
     }
 
     @Override
@@ -103,57 +113,47 @@ public class MyToolBar extends Toolbar {
         initView();
         if (titleTextView != null)
         {
+
             titleTextView.setText(title);
-            showTitleTextView();
+//            Log.d("Change1",title+ "--getTvContent"+titleTextView.getText());
+
+            showTitle();
         }
     }
 
-    private void showTitleTextView() {
-        if (titleTextView != null)
-        {
-            titleTextView.setVisibility(VISIBLE);
-        }
-    }
-
-    private void hideTitleTextView()
-    {
-        if (titleTextView != null)
-        {
-            titleTextView.setVisibility(INVISIBLE);
-        }
-    }
 
 //    About "Toolbar" - leftButton -- back
-    public void showLeftButtonVisibility()
+    public void showLeftButton()
     {
-        initView();
+//        initView();
         if (leftButton != null)
         {
             leftButton.setVisibility(VISIBLE);
         }
     }
 
-    public void hideLeftButtonVisibility()
+    public void hideLeftButton()
     {
-        initView();
+//        initView();
         if (leftButton != null)
         {
+            Log.d("hide","Left");
             leftButton.setVisibility(INVISIBLE);
         }
     }
 
 //    About "Toolbar" - RightButton -- Search
-    public void showRightButtonVisibility()
+    public void showRightButton()
     {
-        initView();
+        //initView();
         if (rightButton != null)
         {
             rightButton.setVisibility(VISIBLE);
         }
     }
-    public void hideRightButtonVisibility()
+    public void hideRightButton()
     {
-        initView();
+       // initView();
         if (rightButton != null)
         {
             rightButton.setVisibility(INVISIBLE);
@@ -187,16 +187,27 @@ public class MyToolBar extends Toolbar {
         }
     }
 
-    public void hideRightButton()
+    public void hideTitle()
     {
-        if (rightButton != null)
+        if (titleTextView != null)
         {
-            rightButton.setVisibility(INVISIBLE);
+            titleTextView.setVisibility(INVISIBLE);
         }
     }
-
+    public void showTitle()
+    {
+        if (titleTextView != null)
+        {
+            titleTextView.setVisibility(VISIBLE);
+        }
+    }
     public void setRightButtonOnClickListener(OnClickListener li)
     {
         rightButton.setOnClickListener(li);
+    }
+    public void setLeftButtonOnClickListener(OnClickListener listener)
+    {
+//        Log.d("ToolBar","LeftButton seted");
+        leftButton.setOnClickListener(listener);
     }
 }

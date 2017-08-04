@@ -34,6 +34,12 @@
         android:layout_below="@id/tv_wareName"
         android:layout_toRightOf="@id/sv_productImage"/>
 
+    <!--<com.rjstudio.androidshoppingmalldemo.widget.NumberAdd-->
+        <!--android:id="@+id/num_control"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--app:minValue="1"/>-->
     <com.rjstudio.androidshoppingmalldemo.widget.CnButton
         app:value="1"
         app:maxValue="1000"
@@ -41,9 +47,9 @@
         app:btnAddBackground="@color/orange"
         app:btnSubBackground="@color/red"
         app:tvBackground="@color/green"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:id="@+id/bu_button"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cnb_button"
         android:layout_alignParentRight="true"
         android:layout_below="@id/tv_wareName"/>
 </RelativeLayout>
