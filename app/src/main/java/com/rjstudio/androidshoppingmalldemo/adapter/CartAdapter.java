@@ -13,6 +13,7 @@ import com.rjstudio.androidshoppingmalldemo.bean.ShoppingCart;
 import com.rjstudio.androidshoppingmalldemo.utils.CartProvider;
 import com.rjstudio.androidshoppingmalldemo.widget.CnButton;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -169,20 +170,31 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> {
 
     public void delect()
     {
-        int i = 0;
-        Log.d("Delect",mList.size()+"");
-        for (ShoppingCart cart : mList)
+//      这里会报错,迭代器有问题
+//        for (ShoppingCart cart : mList)
+//        {
+//            if (cart.isChecked())
+//            {
+//                int position = mList.indexOf(cart);
+//                mList.remove(cart);
+//                cartProvider.delete(cart);
+//                notifyItemRemoved(position);
+//            }
+//        }
+
+//        TODO : 整理笔记  -> 迭代器的知识点 -> Iterator的使用
+        for (Iterator<ShoppingCart> iterator = mList.iterator() ; iterator.hasNext();)
         {
+            ShoppingCart cart = iterator.next();
             if (cart.isChecked())
             {
-                mList.remove(i);
+                int position = mList.indexOf(cart);
+                iterator.remove();
                 cartProvider.delete(cart);
-                notifyItemRemoved(i);
-                //TODO : ConcurrentModificationException
+                notifyItemRemoved(position);
             }
-            i ++;
         }
-        Log.d("Delect",mList.size()+"");
+        showTotalPrice();
     }
 
 
