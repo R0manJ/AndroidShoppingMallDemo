@@ -5,6 +5,9 @@ package com.rjstudio.androidshoppingmalldemo;
  */
 
 public class Contants {
+
+    public static final String  COMPAINGAIN_ID="compaigin_id";
+
     public static class API{
         public static final String BASE_URL = "http://112.124.22.238:8081/course_api";
 //http://112.124.22.238:8081/course_api/campaign/recommend
@@ -16,5 +19,7 @@ public class Contants {
 
         //http://112.124.22.238:8081/course_api/wares/list?curPage=1&pageSize=10&categoryId=5
         public static final String CATEGORY_WARE = BASE_URL +"/wares/list";
+        public static final String WARES_CAMPAIN_LIST=BASE_URL +"/wares/campaign/list";
+
     }
 }

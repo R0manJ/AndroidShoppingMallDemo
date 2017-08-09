@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Request request, Exception e) {
-                Log.d("Init fail", "onFailure: ");
+//                Log.d("Init fail", "onFailure: ");
             }
 
             @Override
@@ -173,14 +173,14 @@ public class HomeFragment extends Fragment {
                 mComaigns = homeCampaigns;
                 for (HomeCampaign homeCampaign:mComaigns)
                 {
-                    Log.d("HomeCampaign", "onSuccess: "+homeCampaign.getTitle());
+//                    Log.d("HomeCampaign", "onSuccess: "+homeCampaign.getTitle());
                 }
                 setComaignData(mComaigns);
             }
 
             @Override
             public void onError(Response response, int code, Exception e) {
-                Log.d("Init fail", "onError: ");
+//                Log.d("Init fail", "onError: ");
 
             }
 

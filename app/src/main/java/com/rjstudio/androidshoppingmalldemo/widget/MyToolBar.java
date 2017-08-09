@@ -210,4 +210,5 @@ public class MyToolBar extends Toolbar {
 //        Log.d("ToolBar","LeftButton seted");
         leftButton.setOnClickListener(listener);
     }
+
 }

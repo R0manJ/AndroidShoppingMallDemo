@@ -15,6 +15,10 @@ public abstract class SpotsCallback<T> extends BaseCallback<T> {
     private Context mContext;
     private SpotsDialog spotsDialog;
 
+    public SpotsCallback(Context context) {
+        this.mContext = context;
+        initSpotsDialog();
+    }
     @Override
     public void onRequestBefore(Request request) {
         showDialog();
@@ -26,10 +30,9 @@ public abstract class SpotsCallback<T> extends BaseCallback<T> {
         dismissDialog();
     }
 
-    public SpotsCallback(Context context) {
-        super();
-        this.mContext = context;
-        initSpotsDialog();
+    @Override
+    public void onFailure(Request request, Exception e) {
+        dismissDialog();
     }
 
     private void initSpotsDialog() {
@@ -37,12 +40,12 @@ public abstract class SpotsCallback<T> extends BaseCallback<T> {
         spotsDialog = new SpotsDialog(mContext,"玩命加载中...");
     }
 
-    private void showDialog()
+    public void showDialog()
     {
         spotsDialog.show();
     }
 
-    private void dismissDialog()
+    public void dismissDialog()
     {
         spotsDialog.dismiss();
 //        spotsDialog.hide();
@@ -53,4 +56,5 @@ public abstract class SpotsCallback<T> extends BaseCallback<T> {
     {
         spotsDialog.setMessage(mContext.getText(stringId));
     }
+    public abstract void onError(Response response,int code,Exception e);
 }

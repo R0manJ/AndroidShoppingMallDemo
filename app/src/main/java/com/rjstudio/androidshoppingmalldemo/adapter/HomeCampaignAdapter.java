@@ -1,6 +1,7 @@
 package com.rjstudio.androidshoppingmalldemo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -21,6 +22,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.rjstudio.androidshoppingmalldemo.R;
+import com.rjstudio.androidshoppingmalldemo.activity.WaresList;
 import com.rjstudio.androidshoppingmalldemo.bean.Campaign;
 import com.rjstudio.androidshoppingmalldemo.bean.HomeCampaign;
 import com.squareup.picasso.Picasso;
@@ -66,8 +68,19 @@ public class HomeCampaignAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // Picasso.with(mContext).load(mList.get(position).getCpOne().getImgUrl()).into(myHolder.iv_product);
         //myHolder.iv_product.setImageURI(mList.get(position).getCpOne().getImgUrl());
         requestImage(mList.get(position).getCpOne().getImgUrl(),myHolder.iv_product);
+
         Picasso.with(mContext).load(mList.get(position).getCpTwo().getImgUrl()).into(myHolder.iv_product2);
         Picasso.with(mContext).load(mList.get(position).getCpThree().getImgUrl()).into(myHolder.iv_product3);
+
+        //设置图片的点击事件
+        myHolder.iv_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, WaresList.class);
+                //TODO : 绑定的数据传过去
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     private void requestImage(String img_url,SimpleDraweeView simpleDraweeView)
