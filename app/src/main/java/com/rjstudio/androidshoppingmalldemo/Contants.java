@@ -20,6 +20,7 @@ public class Contants {
         //http://112.124.22.238:8081/course_api/wares/list?curPage=1&pageSize=10&categoryId=5
         public static final String CATEGORY_WARE = BASE_URL +"/wares/list";
         public static final String WARES_CAMPAIN_LIST=BASE_URL +"/wares/campaign/list";
-
+        //商品详情界面
+        public static final String WARES_DETAIL = BASE_URL + "/wares/detail.html";
     }
 }

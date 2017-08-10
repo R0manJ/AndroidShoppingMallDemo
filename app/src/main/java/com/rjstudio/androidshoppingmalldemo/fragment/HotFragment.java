@@ -1,5 +1,6 @@
 package com.rjstudio.androidshoppingmalldemo.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.R;
+import com.rjstudio.androidshoppingmalldemo.adapter.BaseAdapter;
 import com.rjstudio.androidshoppingmalldemo.adapter.HotWaresAdapter;
 import com.rjstudio.androidshoppingmalldemo.bean.Page;
 import com.rjstudio.androidshoppingmalldemo.bean.Ware;
@@ -24,6 +29,8 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.util.List;
+
+import dmax.dialog.SpotsDialog;
 
 /**
  * Created by r0man on 2017/7/26.
@@ -55,6 +62,7 @@ public class HotFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_showHotProductItem);
         initRefreshLayout();
         getData();
+
         return view;
     }
 
@@ -72,6 +80,7 @@ public class HotFragment extends Fragment {
             case STATE_NORMAL:
                 hotWaresAdapter = new HotWaresAdapter(getContext(),data);
                 recyclerView.setAdapter(hotWaresAdapter);
+
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 break;
             case STATE_REFREN:
@@ -173,5 +182,29 @@ public class HotFragment extends Fragment {
         curPage ++;
         state = STATE_MORE;
         getData();
+    }
+
+    class WebAppInterface{
+
+        Context context;
+        public WebAppInterface(Context context)
+        {
+            this.context = context;
+        }
+
+    }
+
+    class WC extends WebViewClient
+    {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return super.shouldOverrideUrlLoading(view, request);
+        }
     }
 }

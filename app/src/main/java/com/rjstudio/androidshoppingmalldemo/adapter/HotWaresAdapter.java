@@ -53,15 +53,7 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
 //                Log.d("Button",ware.getName());
             }
         });
-        holder.findSimpleDraweeView(R.id.sv_productImage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null)
-                {
-                    onItemClickListener.startActivity(mContext);
-                }
-            }
-        });
+
     }
 
 
@@ -87,15 +79,6 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
         return cart;
     }
 
-    //添加每一个图片的点击事件
-    public interface  OnItemClickListener
-    {
-        void startActivity(Context context);
-    }
 
-    public void setOnItemOnClickListener(OnItemClickListener onItemOnClickListener)
-    {
-        this.onItemClickListener = onItemOnClickListener;
-    }
 
 }

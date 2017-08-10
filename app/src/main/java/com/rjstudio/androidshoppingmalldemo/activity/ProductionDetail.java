@@ -6,15 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.rjstudio.androidshoppingmalldemo.Contants;
 import com.rjstudio.androidshoppingmalldemo.R;
+
+import dmax.dialog.SpotsDialog;
 
 public class ProductionDetail extends AppCompatActivity {
 
     private WebView wb;
     private WebAppInterface webInterface;
+
+    private SpotsDialog spotsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,47 +31,43 @@ public class ProductionDetail extends AppCompatActivity {
     }
     public void initView()
     {
+        spotsDialog = new SpotsDialog(this);
+
         wb = (WebView) findViewById(R.id.wb);
-        wb.loadUrl("file:///android_asset/index.html");
+        wb.loadUrl(Contants.API.WARES_DETAIL);
         wb.getSettings().setJavaScriptEnabled(true);
         webInterface = new WebAppInterface(this);
-        wb.addJavascriptInterface(webInterface,"app");
-        Button bu_addToCart = (Button) findViewById(R.id.bu_addToCart);
-        bu_addToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                webInterface.setName();
-                
-            }
-        });
+        wb.addJavascriptInterface(webInterface,"appInterface");
+        wb.setWebViewClient(new CnWebClient());
+        spotsDialog.show();
+
     }
 
 
     class WebAppInterface{
         private Context context;
+
         public WebAppInterface(Context context)
         {
             this.context = context;
 
         }
-
         @JavascriptInterface
-        public void getToast(String name)
+        public void showDetail()
         {
-            Toast.makeText(context, "From html value :"+name, Toast.LENGTH_SHORT).show();
+
         }
 
-        @JavascriptInterface
-        public void setName()
-        {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    wb.loadUrl("javascript:setName('"+"Android"+"')");
 
+    }
 
-                }
-            });
+    class CnWebClient extends WebViewClient
+    {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            webInterface.showDetail();
+            spotsDialog.dismiss();
         }
     }
 }
