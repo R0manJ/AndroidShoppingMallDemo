@@ -39,7 +39,9 @@
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginTop="10dp"-->
-        <!--app:minValue="1"/>-->
+        <!--app:minValue="1"/>
+        -->
+
     <com.rjstudio.androidshoppingmalldemo.widget.CnButton
         app:value="1"
         app:maxValue="1000"
@@ -50,6 +52,7 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:id="@+id/cnb_button"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/tv_wareName"/>
+        android:layout_below="@+id/tv_wareName"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
