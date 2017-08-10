@@ -1,5 +1,7 @@
 package com.rjstudio.androidshoppingmalldemo.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -140,6 +142,13 @@ public class WaresList extends AppCompatActivity implements PageUtil.OnpageListe
     @Override
     public void load(List<Ware> datas, int totalPage, int totalCount) {
         hotWaresAdapter = new HotWaresAdapter(this,datas);
+        hotWaresAdapter.setOnItemOnClickListener(new HotWaresAdapter.OnItemClickListener() {
+            @Override
+            public void startActivity(Context context) {
+                Intent intent = new Intent(context,ProductionDetail.class);
+                WaresList.this.startActivity(intent);
+            }
+        });
         Log.d("Load",datas.size()+"--");
         recyclerView.setAdapter(hotWaresAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

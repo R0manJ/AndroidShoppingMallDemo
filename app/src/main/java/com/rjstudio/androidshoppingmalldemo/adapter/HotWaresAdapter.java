@@ -23,7 +23,8 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
     private List<Ware> mList;
     private CartProvider cartProvider;
 
-    private OnItemClickListener onItemClickListener;
+
+    public OnItemClickListener onItemClickListener;
 
 //    public HotWaresAdapter(Context context, List<Page > list) {
 //        this.mContext = context;
@@ -35,6 +36,7 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
         //List<Ware>
         super(context,R.layout.hot_item_layout, datas);
         this.mList = datas;
+        this.mContext = context;
         this.cartProvider = new CartProvider(context);
     }
 
@@ -49,6 +51,15 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
             public void onClick(View v) {
                 cartProvider.put(convertData(ware));
 //                Log.d("Button",ware.getName());
+            }
+        });
+        holder.findSimpleDraweeView(R.id.sv_productImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null)
+                {
+                    onItemClickListener.startActivity(mContext);
+                }
             }
         });
     }
@@ -75,4 +86,16 @@ public class HotWaresAdapter extends SimpleAdatper<Ware>  {
 
         return cart;
     }
+
+    //添加每一个图片的点击事件
+    public interface  OnItemClickListener
+    {
+        void startActivity(Context context);
+    }
+
+    public void setOnItemOnClickListener(OnItemClickListener onItemOnClickListener)
+    {
+        this.onItemClickListener = onItemOnClickListener;
+    }
+
 }

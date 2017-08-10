@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rjstudio.androidshoppingmalldemo">
-
 
     <application
         android:name=".FrescoApplication"
@@ -20,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WaresList"/>
+        <activity android:name=".activity.WaresList" />
+        <activity android:name=".activity.ProductionDetail"></activity>
     </application>
 
 </manifest>

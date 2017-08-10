@@ -1,0 +1,28 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <input id="getName">
+        <br/>
+        <button id="bu_positiveOnClick" onclick="javascript:getName()">CONFIRM</button>
+        <br>
+        <a>获取安卓的方法进行设置</a>
+        <br>
+        <button id="bu_negativeClick" onclick="javascript:setName()">CANCEL</button>
+    </body>
+
+    <script language="javascript">
+        function getName()
+        {
+            var name = document.getElementById("getName").value;
+            window.app.getToast(name);
+        }
+
+        function setName(name)
+        {
+            document.getElementById("getName").value = name;
+        }
+
+    </script>
+</html>
