@@ -3,13 +3,24 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-
+    <com.rjstudio.androidshoppingmalldemo.widget.MyToolBar
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/toolbar"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:hint="phone number"
         android:id="@+id/et_phoneNumber"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="numberPassword"
+        android:hint="password"
+        android:id="@+id/et_pwd"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,4 +39,11 @@
         android:layout_weight="3"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/bu_confirm"
+        android:text="submit"
+        />
     </LinearLayout>
